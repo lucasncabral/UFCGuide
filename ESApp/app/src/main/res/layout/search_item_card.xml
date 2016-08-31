@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_trade"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginBottom="0dp"
+    android:layout_marginTop="@dimen/card_marginTop"
+    android:layout_marginLeft="@dimen/card_marginLeft"
+    android:layout_marginRight="@dimen/card_marginRight"
+    card_view:cardElevation="4dp"
+    card_view:cardMaxElevation="4dp"
+    card_view:cardUseCompatPadding="false"
+    card_view:cardPreventCornerOverlap="false"
+    card_view:cardCornerRadius="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Genilda"
+            android:id="@+id/placeName"
+            android:textSize="18dp"
+            android:paddingLeft="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#2c2c2c"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Xerox"
+            android:fontFamily="sans-serif"
+            android:id="@+id/placeType"
+            android:layout_below="@+id/placeName"
+            android:layout_alignStart="@id/placeName"
+            android:paddingLeft="15dp"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="3.3"
+            android:fontFamily="sans-serif"
+            android:id="@+id/reputationText"
+            android:paddingLeft="15dp"
+            android:textSize="15dp"
+            android:layout_marginEnd="80dp"
+            android:layout_alignBottom="@+id/placeName"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="1.5km"
+            android:fontFamily="sans-serif"
+            android:id="@+id/distanceText"
+            android:paddingLeft="15dp"
+            android:textSize="15dp"
+            android:layout_below="@+id/placeType"
+            android:layout_alignStart="@+id/reputationText"
+            android:layout_marginTop="-15dp" />
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

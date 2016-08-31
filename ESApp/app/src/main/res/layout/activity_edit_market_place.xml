@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.EditMarkedPlaceActivity">
+
+    <!-- <include android:id="@+id/t" layout="@layout/toolbar"/> -->
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.RegisterActivity">
+    <!--android:layout_below="@+id/t" -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <FrameLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:id="@+id/LinearLayoutFieldPhoto"
+            android:layout_weight="1.63">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/imageViewPhoto"
+                android:layout_gravity="left|top"
+                android:background="#353434"
+                android:src="@drawable/default_image" />
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/LinearLayoutFieldName">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:textSize="15dp"
+                android:id="@+id/editTextName"
+                android:textColorHint="@color/cast_intro_overlay_background_color"
+                android:backgroundTint="#eaeaea"
+                android:hint="Name"
+                android:layout_gravity="right|top"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="25dp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/LinearLayoutFieldEmail">
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerCategory"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentTop="true"
+                android:paddingTop="17dp"
+                android:layout_toEndOf="@+id/textView"
+                android:layout_marginStart="33dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:textSize="15dp"
+                android:id="@+id/editTextInfo2"
+                android:textColorHint="@color/cast_intro_overlay_background_color"
+                android:backgroundTint="#eaeaea"
+                android:hint="Descrição"
+                android:layout_weight="1"
+                android:maxLines="8"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="73dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Categoria: "
+                android:textColor="@color/cast_intro_overlay_background_color"
+                android:textColorHint="@color/cast_intro_overlay_background_color"
+                android:id="@+id/textView"
+                android:layout_alignTop="@+id/spinnerCategory"
+                android:layout_alignStart="@+id/editTextInfo2"
+                android:paddingTop="20dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+</RelativeLayout>

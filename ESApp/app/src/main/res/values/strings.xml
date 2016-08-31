@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Prototipo ES</string>
+    <string name="title_activity_home">Map</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps2">Map</string>
+    <string name="edit_lbl">Edit Informations</string>
+    <string name="title_activity_fab">fab</string>
+    <string name="about">About</string>
+    <string name="action_logoff">Log Out</string>
+    <string name="action_profile">Profile</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="text_no_search_found">No results for this search</string>
+
+    // TOASTs
+    <string name="connectFail">Failed to connect</string>
+    <string name="message_gps_off">Your GPS is off, please turn on</string>
+
+    // KEYs
+    <string name="key_google_api">AIzaSyC0wkj5CCnLTN32a9uGAEXiWYrjloJ0Fow</string>
+
+    // SERVER
+    <string name="server_uri">https://appes1.herokuapp.com/</string>
+
+    <string name="map">Map</string>
+    <string name="map_permission_error">You may have disabled the map permission or the high accuracy GPS.</string>
+    <string name="map_permission_error_title">Map Permission</string>
+    <string name="loading">Loading...</string>
+    <string name="add_place">Add place</string>
+    <string name="mark_outside_pb">mark invalid local</string>
+    <string name="options">Options</string>
+    <string name="category_my_count">Account</string>
+    <string name="user_name">User Name</string>
+    <string name="email">Email</string>
+    <string name="categories">Categories</string>
+    <string name="about_and_help">About and Help</string>
+    <string name="my_location">My Location</string>
+    <string name="show_my_location">Show my location</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="contact_us">Contact us</string>
+    <string name="no_result">No result for this search</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="legend_map">Map Legend</string>
+
+    <string name="str_btn_draw">Draw Route</string>
+    <string name="out_of_ufcg">Out of UFCG</string>
+</resources>

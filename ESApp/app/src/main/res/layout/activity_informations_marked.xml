@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lucas.esapp.Activity.InformationsMarkedActivity">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.RegisterActivity">
+        <!--android:layout_below="@+id/t" -->
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+            <FrameLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:id="@+id/LinearLayoutFieldPhoto"
+                android:layout_weight="1.63">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/imageViewPhoto"
+                    android:layout_gravity="left|top"
+                    android:background="#353434"
+                    android:src="@drawable/default_image" />
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:id="@+id/LinearLayoutFieldName">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Nome"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:id="@+id/textMarketName"
+                    android:textColor="#000000"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:id="@+id/ratingBar"
+                    android:progressTint="@android:color/holo_orange_light"
+                    android:rating="5.0"
+                    android:clickable="true"
+                    android:layout_marginLeft="70dp"
+                    android:layout_below="@+id/textMarketName"
+                    android:layout_centerHorizontal="true" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="avaliar"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/rating_button"
+                    android:background="#00ffffff"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/ratingBar" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/LinearLayoutFieldEmail">
+
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Informação 1"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:id="@+id/textCategoria"
+                android:textColor="@color/colorAccent"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Informação 2"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:id="@+id/textDescricao"
+                    android:paddingTop="30dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+
+
+
+
+
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:id="@+id/edit_button"
+                android:layout_marginTop="50dp"
+                android:textColor="@color/colorPrimary"
+                android:background="#00ffffff"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center_horizontal" />
+
+            <!--
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Last update by: Lucas Cabral"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:id="@+id/updateBy"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" /> -->
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

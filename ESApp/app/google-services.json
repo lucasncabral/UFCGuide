@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "200698806419",
+    "project_id": "ufcg-guide"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200698806419:android:35fd7d8c03fbd5bc",
+        "android_client_info": {
+          "package_name": "com.example.lucas.esapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200698806419-8272dvat510mji4h8h2fhqr3a086v5o7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lucas.esapp",
+            "certificate_hash": "94DF527BC2A6AFF8AF85488C974D136C31F94439"
+          }
+        },
+        {
+          "client_id": "200698806419-t9t2dnqdsp7pk1o6o63tlvu8lnfc9u77.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0wkj5CCnLTN32a9uGAEXiWYrjloJ0Fow"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

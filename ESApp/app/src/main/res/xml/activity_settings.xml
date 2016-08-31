@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <PreferenceCategory
+        android:title="@string/category_my_count"
+        android:key="pref_key_storage_settings">
+
+        <EditTextPreference
+        android:key="pref_sync3"
+        android:title="@string/user_name"
+        android:summary="username"
+        android:defaultValue="username"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+        <EditTextPreference
+        android:key="pref_sync3"
+        android:title="@string/email"
+        android:summary="username@hotmail.com"
+        android:defaultValue="username@hotmail.com"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Map Filters"
+        android:key="pref_key_storage_settings">
+
+        <PreferenceScreen
+            android:key="button_voicemail_setting_key"
+            android:title="@string/legend_map"
+            android:persistent="false">
+        </PreferenceScreen>
+
+        <MultiSelectListPreference
+            android:dialogTitle="TitleDialog"
+            android:key="mode_repeat"
+            android:summary=""
+            android:title="@string/categories"
+            android:entries="@array/pref_syncConnectionTypes_entries"
+            android:entryValues="@array/pref_syncConnectionTypes_values"
+            android:defaultValue="@array/pref_syncConnectionTypes_values"
+            />
+
+        <CheckBoxPreference
+            android:key="pref_sync"
+            android:title="@string/my_location"
+            android:summary="@string/show_my_location"
+            android:defaultValue="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/about_and_help"
+        android:key="pref_key_storage_settings">
+
+        <PreferenceScreen
+            android:key="button_voicemail_setting_key"
+            android:title="@string/about"
+            android:persistent="false">
+
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="button_voicemail_setting_key"
+            android:title="@string/tutorial"
+            android:persistent="false">
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="button_voicemail_setting_key"
+            android:title="@string/terms_of_service"
+            android:persistent="false">
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="button_voicemail_setting_key"
+            android:title="@string/contact_us"
+            android:persistent="false">
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="button_voicemail_setting_key"
+            android:title="@string/action_logoff"
+            android:persistent="false">
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
