@@ -73,7 +73,7 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
             case R.id.action_register:
                 // TODO editar informações
                 if(adicionar){
-                    Toast.makeText(EditMarkedPlaceActivity.this, "Add", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditMarkedPlaceActivity.this, "Add =)", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(EditMarkedPlaceActivity.this, "Edit", Toast.LENGTH_SHORT).show();
                 }
