@@ -3,10 +3,12 @@ package com.example.lucas.esapp.Fragment;
 import android.annotation.TargetApi;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +36,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.lucas.esapp.R.color.greenbutton;
 
 /**
  * Created by Lucas on 26/07/20
@@ -85,8 +89,9 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
 
         ImageView imageView = (ImageView) view.findViewById(R.id.imageMarket);
         RatingBar ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
-        Button button = (Button) view.findViewById(R.id.buttonOk);
-        Button buttonDrawRoute = (Button) view.findViewById(R.id.btn_draw);
+        TextView button = (TextView) view.findViewById(R.id.buttonOk);
+        FloatingActionButton buttonDrawRoute = (FloatingActionButton) view.findViewById(R.id.btn_draw);
+        buttonDrawRoute.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.greenbutton)));
 
         polylines = new ArrayList<>();
 

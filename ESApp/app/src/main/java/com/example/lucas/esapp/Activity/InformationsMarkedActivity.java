@@ -3,6 +3,8 @@ package com.example.lucas.esapp.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +36,8 @@ public class InformationsMarkedActivity extends AppCompatActivity {
 
         markedplace = getIntent().getExtras().getParcelable("markedplace");
 
-        Button editButton = (Button) findViewById(R.id.edit_button);
+        FloatingActionButton editButton = (FloatingActionButton) findViewById(R.id.edit_button);
+        editButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.greenbutton)));
         TextView name = (TextView) findViewById(R.id.textMarketName);
         TextView categoria = (TextView) findViewById(R.id.textCategoria);
         TextView descricao = (TextView) findViewById(R.id.textDescricao);

@@ -19,22 +19,13 @@
         android:layout_height="match_parent"
         android:weightSum="1">
 
-        <FrameLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:id="@+id/LinearLayoutFieldPhoto"
-            android:layout_weight="1.63">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/imageViewPhoto"
-                android:layout_gravity="left|top"
-                android:background="#353434"
-                android:src="@drawable/default_image" />
-
-        </FrameLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="400px"
+            android:id="@+id/imageViewPhoto"
+            android:layout_gravity="left|top"
+            android:background="#353434"
+            android:src="@drawable/default_image" />
 
         <RelativeLayout
             android:orientation="vertical"

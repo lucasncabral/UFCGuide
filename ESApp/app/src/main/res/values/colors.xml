@@ -7,6 +7,8 @@
     <color name="white">#ffffff</color>
     <color name="red">#f11d1d</color>
 
+    <color name="greenbutton">#008B8B</color>
+
     <color name="radio_button_selected_color">#303F9F</color>
     <color name="radio_button_unselected_color">@android:color/transparent</color>
 
