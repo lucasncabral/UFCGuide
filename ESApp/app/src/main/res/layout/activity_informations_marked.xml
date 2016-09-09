@@ -50,7 +50,8 @@
                     android:rating="5.0"
                     android:clickable="true"
                     android:layout_marginLeft="70dp"
-                    android:layout_above="@+id/rating_button"
+                    android:layout_marginTop="44dp"
+                    android:layout_below="@+id/textView5"
                     android:layout_centerHorizontal="true" />
 
                 <Button
@@ -60,9 +61,8 @@
                     android:textColor="@color/colorPrimary"
                     android:id="@+id/rating_button"
                     android:background="#00ffffff"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="52dp" />
+                    android:layout_below="@+id/ratingBar"
+                    android:layout_centerHorizontal="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -100,6 +100,17 @@
                     android:layout_alignTop="@+id/textCategoria"
                     android:layout_alignEnd="@+id/imageViewPhoto" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:text="Visualizar comentários"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/textView5"
+                    android:layout_below="@+id/edit_button"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="46dp" />
             </RelativeLayout>
+
 
 </RelativeLayout>
