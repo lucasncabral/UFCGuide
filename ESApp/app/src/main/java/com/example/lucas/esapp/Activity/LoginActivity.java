@@ -22,12 +22,20 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     private static final int SIGN_IN_CODE_GOOGLE = 9;
     private GoogleApiClient mGoogleApiClient;
+    private AsyncHttpClient client;
+    private String SERVER_URI;
+
 
     private SharedPreferences prefs;
 
@@ -47,8 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
         signInButton.setOnClickListener(this);
-
-
+        client = new AsyncHttpClient();
+        SERVER_URI = getString(R.string.server_uri);
         prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
     }
 
@@ -108,19 +116,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String photo = acct != null ? acct.getPhotoUrl().toString() : "No photo";
 
             try {
-
-                // TODO VALIDAR LOGIN E ENTRAR NA APLICAÇÃO
-                Intent mainActivity = new Intent(this, MainActivity.class);
-                startActivity(mainActivity);
-
-
-                // remover
-
                 SharedPreferences.Editor ed = prefs.edit();
                 ed.putBoolean("logado", true);
                 ed.commit();
-
-                finish();
+                loginOrRegister(name, email, photo);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -128,11 +127,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginOrRegister(String name, String email, String photo) {
-        // String name = request.queryParams("name");
-        // String email = request.queryParams("email");
-        // String photo = request.queryParams("photo");
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("name", name);
+        requestParams.put("email", email);
+        requestParams.put("photo", photo);
+        requestParams.setUseJsonStreamer(true);
+        client.post(SERVER_URI + "/login", requestParams, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(LoginActivity.this, "Error to login", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.d("response", responseString);
 
+                // TODO escolher se vai pra tutorial ou main (response tem um "newClient" pra decidir isso)
+                carregaMain();
+            }
+        });
+    }
 
+    private void carregaMain() {
+
+        Intent mainActivity = new Intent(this, MainActivity.class);
+        startActivity(mainActivity);
+        finish();
     }
 }

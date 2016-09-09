@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -51,6 +52,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -326,48 +331,63 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
 
     private void fetchMarkers() {
         loading();
-        // TODO get Marked Places server
+        List<MarkedPlace> markers = new ArrayList<>();
 
-        Double lat[] = {-7.21620751, -7.21620152, -7.21405146, -7.21238302, -7.21238456};
-        Double log[] = {-35.91057133, -35.91102496, -35.90773724, -35.90778418, -35.90778005};
-        String localName[] = {"Marcos", "Genilda", "Amarelinha", "Embedded", "Xerox UFCG"};
-        String localType[] = {"Lanchonete", "Xerox", "Xerox", "Laboratório", "Xerox"};
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String JSONMarkers = sharedPref.getString("markers", null);
 
-        MarkedPlace newMarker;
-        markedPlaces = new ArrayList<>();
+        if(JSONMarkers != null){
+            try {
+                JSONObject response = new JSONObject(JSONMarkers);
+                JSONArray responsePost = response.getJSONArray("result");
+                for (int i = 0; i < responsePost.length(); i++) {
+                    JSONObject marked = responsePost.getJSONObject(i);
+                    Integer id = marked.getInt("id");
+                    Double evaluation = marked.getDouble("evaluation");
+                    Double distance = marked.getDouble("distance");
+                    Double log = marked.getDouble("log");
+                    Double lat = marked.getDouble("lat");
+                    String name = marked.getString("name");
+                    String photo = marked.getString("photo");
+                    String category = marked.getString("category");
+                    String descricao = marked.getString("descricao");
+                    markers.add(new MarkedPlace(id,category,name,descricao,photo,lat,log,distance,evaluation));
+                }
+        } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         myLocation = getMyLocation();
-        double numero = 2.1;
 
         DecimalFormat formatter = new DecimalFormat("#0.000");
         double distance;
-        for (int i = 0; i < lat.length; i++) {
-            distance = distanceUser((new LatLng(lat[i],log[i])))/1000;
+        for (MarkedPlace marker : markers) {
+            distance = distanceUser((new LatLng(marker.getLat(),marker.getLog())))/1000;
             try {
-                Log.d("distance", distance + "");
                 distance =  Double.valueOf(formatter.format(distance).replace(",", "."));
             } catch (Exception ex){
                 ex.printStackTrace();
                 distance = -0.001;
             }
+            marker.setDistance(distance);
 
-            numero += 0.5;
-            newMarker = new MarkedPlace(i,localType[i],localName[i], "info1", "info2", lat[i],log[i], distance, numero);
-            markedPlaces.add(newMarker);
-            switch (localType[i]) {
+            switch (marker.getCategory()) {
                 case "Lanchonete":
-                    markerOptions = new MarkerOptions().position(new LatLng(lat[i], log[i])).title(localName[i]);
+                    markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
                     break;
                 case "Xerox":
-                    markerOptions = new MarkerOptions().position(new LatLng(lat[i], log[i])).title(localName[i]);
+                    markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
                     break;
                 case "Coordenação":
-                    markerOptions = new MarkerOptions().position(new LatLng(lat[i], log[i])).title(localName[i]);
+                    markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
                     break;
                 default:
-                    markerOptions = new MarkerOptions().position(new LatLng(lat[i], log[i])).title(localName[i]);
+                    markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
             }
             mMap.addMarker(markerOptions);
         }
+        markedPlaces = markers;
 
         progress.dismiss();
     }
