@@ -20,7 +20,7 @@
     <string name="key_google_api">AIzaSyC0wkj5CCnLTN32a9uGAEXiWYrjloJ0Fow</string>
 
     // SERVER
-    <string name="server_uri">https://appes1.herokuapp.com/</string>
+    <string name="server_uri">https://es1-server.herokuapp.com</string>
 
     <string name="map">Map</string>
     <string name="map_permission_error">You may have disabled the map permission or the high accuracy GPS.</string>
@@ -44,4 +44,6 @@
 
     <string name="str_btn_draw">Draw Route</string>
     <string name="out_of_ufcg">Out of UFCG</string>
+    <string name="error_make_request">error make request</string>
+    <string name="preference_file_key">preferences</string>
 </resources>

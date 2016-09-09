@@ -84,7 +84,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:key="button_voicemail_setting_key"
+            android:key="log_out"
             android:title="@string/action_logoff"
             android:persistent="false">
         </PreferenceScreen>

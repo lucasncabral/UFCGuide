@@ -1,6 +1,9 @@
 package com.example.lucas.esapp.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +29,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int SIGN_IN_CODE_GOOGLE = 9;
     private GoogleApiClient mGoogleApiClient;
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
         signInButton.setOnClickListener(this);
+
+
+        prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
     }
 
     @Override
@@ -90,15 +98,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivityForResult(signInIntent, SIGN_IN_CODE_GOOGLE);
     }
 
-    private void signOut() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                    }
-                });
-    }
-
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
@@ -109,9 +108,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String photo = acct != null ? acct.getPhotoUrl().toString() : "No photo";
 
             try {
-                Log.d("Nome: ", name);
-                Log.d("email: ", email);
-                Log.d("Photo: ", acct.getPhotoUrl().toString());
 
                 // TODO VALIDAR LOGIN E ENTRAR NA APLICAÇÃO
                 Intent mainActivity = new Intent(this, MainActivity.class);
@@ -119,11 +115,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                 // remover
+
+                SharedPreferences.Editor ed = prefs.edit();
+                ed.putBoolean("logado", true);
+                ed.commit();
+
                 finish();
-                signOut();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void loginOrRegister(String name, String email, String photo) {
+        // String name = request.queryParams("name");
+        // String email = request.queryParams("email");
+        // String photo = request.queryParams("photo");
+
+
+
     }
 }
