@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#E6E6FA"
+    android:paddingTop="30dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:background="@drawable/shape_dialog"
     android:gravity="center_vertical|center|center_horizontal"
     android:weightSum="1">
 
