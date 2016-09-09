@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="280dp"
-    android:orientation="vertical"
+    android:layout_height="380dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:background="#E6E6FA"
-    android:gravity="center_vertical|center|center_horizontal"
-    android:weightSum="1">
+   >
 
-
-
-            <TextView
+           <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -21,7 +21,7 @@
 
     <RatingBar
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:id="@+id/ratingBar"
         android:backgroundTint="#E6E6FA"
         style="?android:attr/actionBarSize"
@@ -29,8 +29,9 @@
         android:rating="5.0"
         android:progressTint="@android:color/holo_orange_light"
         android:layout_gravity="center_horizontal"
-        android:layout_above="@+id/editTextDescricao"
-        android:layout_toEndOf="@+id/textMarketName" />
+        android:layout_below="@+id/textMarketName"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="30dp"/>
 
 
     <TextView
@@ -38,34 +39,32 @@
         android:layout_height="wrap_content"
         android:id="@+id/cancelbtn"
         android:layout_gravity="start"
-        android:text="Cancelar"
-        android:textSize="18dp"
+        android:text="CANCELAR"
+        android:textSize="15dp"
         android:textColor="@color/greenbutton"
-        android:textStyle="bold"
-        android:layout_alignBaseline="@+id/buttonSend"
-        android:layout_alignBottom="@+id/buttonSend"
-        android:layout_toEndOf="@+id/textMarketName" />
+        android:layout_alignTop="@+id/buttonSend"
+        android:layout_alignStart="@+id/editTextDescricao" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enviar"
-        android:textSize="18dp"
+        android:text="ENVIAR"
+        android:textSize="15dp"
         android:background="#00ffffff"
         android:textColor="@color/greenbutton"
         android:id="@+id/buttonSend"
-        android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/ratingBar" />
+        android:layout_below="@+id/editTextDescricao"
+        android:layout_alignEnd="@+id/ratingBar"
+        android:layout_marginTop="58dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Descrição"
+        android:hint="Adicione um comentário"
         android:maxLines="4"
         android:id="@+id/editTextDescricao"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/ratingBar"
+        android:layout_alignStart="@+id/ratingBar" />
 
 </RelativeLayout>
