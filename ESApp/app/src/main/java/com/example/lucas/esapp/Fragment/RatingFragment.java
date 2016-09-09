@@ -55,14 +55,25 @@ public class RatingFragment extends DialogFragment {
         TextView nome = (TextView) view.findViewById(R.id.textMarketName);
         RatingBar rating = (RatingBar) view.findViewById(R.id.ratingBar);
         EditText descricao = (EditText) view.findViewById(R.id.editTextDescricao);
-        Button send = (Button) view.findViewById(R.id.buttonSend);
-
+        TextView send = (TextView) view.findViewById(R.id.buttonSend);
+        TextView cancel = (TextView) view.findViewById(R.id.cancelbtn);
         nome.setText(markedPlace.getName());
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Send", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    finalize();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
             }
         });
 
