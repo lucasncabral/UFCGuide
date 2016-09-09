@@ -10,10 +10,36 @@
 
     <LinearLayout
         android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout"
         android:weightSum="1">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:id="@+id/btn_draw"
+            android:layout_height="wrap_content"
+            android:src="@drawable/locations"
+            android:layout_gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1.50" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Nome"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:id="@+id/textMarketName"
+            android:textColor="#000000"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1.50" />
 
         <RelativeLayout
             android:orientation="horizontal"
@@ -27,8 +53,9 @@
                 android:layout_height="match_parent"
                 android:id="@+id/imageMarket"
                 android:src="@drawable/default_image"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/textMarketName"
                 android:layout_alignParentStart="true" />
+
         </RelativeLayout>
     </LinearLayout>
 
@@ -37,35 +64,6 @@
         android:layout_width="324dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.37">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Nome"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:id="@+id/textMarketName"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="#000000"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp" />
-
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:attr/ratingBarStyleIndicator"
-            android:id="@+id/ratingBar"
-            android:progressTint="@android:color/holo_orange_light"
-            android:rating="5.0"
-            android:clickable="true"
-            android:layout_alignLeft="@+id/game_photo_one"
-            android:layout_alignStart="@+id/game_photo_one"
-            android:layout_below="@+id/view"
-            android:layout_marginTop="4dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="70dp" />
 
 
         <LinearLayout
@@ -86,15 +84,25 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="287dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp">
 
-            </LinearLayout>
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="198dp"
+        android:layout_height="wrap_content"
+       >
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:id="@+id/ratingBar"
+            android:progressTint="@android:color/holo_orange_light"
+            android:rating="5.0"
+            android:clickable="true"
+/>
     </LinearLayout>
 
     <LinearLayout
@@ -114,13 +122,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#c9c9c9"
-                android:id="@+id/view"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -130,21 +131,21 @@
                 android:textColor="#008B8B"
                 android:textSize="23sp"
                 android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="44dp" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="58dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Voltar"
+                android:textColor="#008B8B"
+                android:id="@+id/textView2"
+                android:layout_alignBottom="@+id/buttonOk"
+                android:layout_toStartOf="@+id/buttonOk"
+                android:layout_marginEnd="56dp" />
 
 
-
-
-
-       <android.support.design.widget.FloatingActionButton
-           android:layout_width="wrap_content"
-           android:id="@+id/btn_draw"
-           android:layout_height="wrap_content"
-           android:src="@drawable/route"
-           android:layout_alignParentTop="true"
-           android:layout_alignParentEnd="true"
-           android:layout_marginEnd="41dp" />
         </RelativeLayout>
     </LinearLayout>
 

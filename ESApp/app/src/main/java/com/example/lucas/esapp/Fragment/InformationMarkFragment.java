@@ -92,7 +92,7 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
         TextView button = (TextView) view.findViewById(R.id.buttonOk);
         FloatingActionButton buttonDrawRoute = (FloatingActionButton) view.findViewById(R.id.btn_draw);
         buttonDrawRoute.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.greenbutton)));
-
+        TextView voltar = (TextView) view.findViewById(R.id.textView2);
         polylines = new ArrayList<>();
 
         textViewName.setText(mark.getName());
@@ -113,6 +113,17 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
             @Override
             public void onClick(View v) {
                 displayRoute();
+            }
+        });
+
+        voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    finalize();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
             }
         });
 
