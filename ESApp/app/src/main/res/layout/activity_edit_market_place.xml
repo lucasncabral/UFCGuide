@@ -6,7 +6,7 @@
     tools:context=".Activity.EditMarkedPlaceActivity">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="1200dp"
             android:layout_height="400px"
             android:id="@+id/imageViewPhoto"
             android:layout_gravity="left|top"
@@ -14,6 +14,16 @@
             android:src="@drawable/default_image"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:id="@+id/btn_photo"
+        android:layout_height="wrap_content"
+        android:src="@drawable/card_multichoice_selector"
+        android:layout_gravity="right"
+        android:layout_weight="1.50"
+        android:layout_alignBottom="@+id/imageViewPhoto"
+        android:layout_alignParentEnd="true" />
 
 
 

@@ -1,6 +1,11 @@
 package com.example.lucas.esapp.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,6 +25,10 @@ import com.example.lucas.esapp.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.soundcloud.android.crop.Crop;
+
+
+import java.io.File;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -32,8 +42,15 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
     private AsyncHttpClient client;
     private String SERVER_URI;
     private ProgressDialog progress;
-
     private boolean adicionar = false;
+
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int PIC_CROP = 2;
+    private static final int RESULT_CAMERA = 3;
+    private Uri mSelectedImageURI;
+    private Uri profilePhoto;
+    private ImageView imagePlace;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +65,18 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
         SERVER_URI = getString(R.string.server_uri);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_18dp);
         editTextInfo2 = (EditText) findViewById(R.id.editTextInfo2);
+        imagePlace = (ImageView) findViewById(R.id.imageViewPhoto);
 
         client = new AsyncHttpClient();
+
+        FloatingActionButton btn_photo = (FloatingActionButton) findViewById(R.id.btn_photo);
+        btn_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
+
 
         markedplace = getIntent().getExtras().getParcelable("markedplace");
 
@@ -67,7 +94,6 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
         editTextName.setText(markedplace.getName());
         editTextInfo2.setText(markedplace.getDescricao());
         // editTextAddress.setText(markedplace.getAddress());
-
     }
 
     @Override
@@ -88,7 +114,6 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
                 if(adicionar){
                     addLocal();
                 } else {
-                    // TODO editar informações
                     editLocal();
                 }
                 return true;
@@ -120,6 +145,12 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
 
             }
         });
+    }
+
+    private void selectImage(){
+        Intent intent1 = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Always show the chooser (if there are multiple options available)
+        startActivityForResult(Intent.createChooser(intent1, getString(R.string.select_picture)), RESULT_LOAD_IMAGE);
     }
 
     private void editLocal() {
@@ -180,5 +211,30 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            mSelectedImageURI = data.getData();
+
+            //performCrop(mSelectedImageURI);
+            Uri destination = Uri.fromFile(new File(getCacheDir(), "cropped"));
+
+            imagePlace.setImageURI(mSelectedImageURI);
+            //Crop.of(mSelectedImageURI, destination).asSquare().start(this);
+
+
+        }
+        else if (resultCode == RESULT_OK && requestCode == Crop.REQUEST_CROP) {
+
+            profilePhoto = Crop.getOutput(data);
+
+            imagePlace.setImageBitmap(null);
+            imagePlace.setImageURI(Crop.getOutput(data));
+
+        }
     }
 }
