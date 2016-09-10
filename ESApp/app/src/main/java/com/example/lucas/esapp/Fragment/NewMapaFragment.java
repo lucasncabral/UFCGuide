@@ -275,7 +275,6 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
             }
         });
-        verifyGpsState();
     }
 
     private void zoomToLocation() {

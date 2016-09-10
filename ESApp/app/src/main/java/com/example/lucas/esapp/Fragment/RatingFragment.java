@@ -75,7 +75,7 @@ public class RatingFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 try {
-                    finalize();
+                    closeFragment();
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 }
@@ -84,6 +84,9 @@ public class RatingFragment extends DialogFragment {
         return view;
     }
 
+    private void closeFragment() {
+        getActivity().getFragmentManager().beginTransaction().remove(this).commit();
+    }
 
 
     @Override

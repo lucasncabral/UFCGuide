@@ -120,7 +120,7 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
             @Override
             public void onClick(View v) {
                 try {
-                    this.finalize();
+                    closeFragment();
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 }
@@ -130,7 +130,10 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
         return view;
     }
 
-    // Second method
+    private void closeFragment() {
+        getActivity().getFragmentManager().beginTransaction().remove(this).commit();
+    }
+
     public void  displayRoute() {
         LatLng start = myPosition;
         LatLng end = new LatLng(markerSelect.latitude, markerSelect.longitude);
