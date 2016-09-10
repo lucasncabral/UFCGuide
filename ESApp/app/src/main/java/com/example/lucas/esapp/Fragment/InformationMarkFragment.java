@@ -2,6 +2,7 @@ package com.example.lucas.esapp.Fragment;
 
 import android.annotation.TargetApi;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
@@ -33,9 +34,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 import static com.example.lucas.esapp.R.color.greenbutton;
 
@@ -102,7 +107,7 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
             @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                MarkedPlace markedplace = new MarkedPlace(0, mark.getCategory(), mark.getName(),mark.getDescricao(), mark.getPhoto(),markerSelect.latitude, markerSelect.longitude,0,mark.getEvaluation() );
+                MarkedPlace markedplace = new MarkedPlace(mark.getId(), mark.getCategory(), mark.getName(),mark.getDescricao(), mark.getPhoto(),markerSelect.latitude, markerSelect.longitude,0,mark.getEvaluation() );
                 Intent registerIntent = new Intent(getActivity(), InformationsMarkedActivity.class);
                 registerIntent.putExtra("markedplace", markedplace);
                 startActivity(registerIntent);

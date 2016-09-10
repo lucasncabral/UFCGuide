@@ -118,6 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             try {
                 SharedPreferences.Editor ed = prefs.edit();
                 ed.putBoolean("logado", true);
+                ed.putString("email", email);
                 ed.commit();
                 loginOrRegister(name, email, photo);
             } catch (Exception e) {

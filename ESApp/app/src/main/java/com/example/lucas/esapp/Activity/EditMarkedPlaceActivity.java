@@ -89,7 +89,7 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
                     addLocal();
                 } else {
                     // TODO editar informações
-                    Toast.makeText(EditMarkedPlaceActivity.this, "Edit", Toast.LENGTH_SHORT).show();
+                    editLocal();
                 }
                 return true;
         }
@@ -110,6 +110,31 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                Toast.makeText(getApplication(), "Error to send place", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Toast.makeText(EditMarkedPlaceActivity.this, "Enviado com sucesso", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+
+            }
+        });
+    }
+
+    private void editLocal() {
+        loading();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("idPlace", markedplace.getId());
+        requestParams.put("name", editTextName.getText());
+        requestParams.put("category", category);
+        requestParams.put("description", editTextInfo2.getText());
+        requestParams.put("photo", "no photo");
+        requestParams.setUseJsonStreamer(true);
+        client.post(SERVER_URI + "/editPlace", requestParams, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(getApplication(), "Error to send edit place", Toast.LENGTH_SHORT).show();
                 progress.dismiss();
             }
 
