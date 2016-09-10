@@ -113,7 +113,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String name = acct != null ? acct.getDisplayName() : "No name";
             String email = acct != null ? acct.getEmail() : "No email";
             String id = acct.getId();
-            String photo = acct != null ? acct.getPhotoUrl().toString() : "No photo";
+            String photo = "no photo";
+            try {
+                photo = acct != null ? acct.getPhotoUrl().toString() : "No photo";
+            } catch (Exception ex) {
+                Log.d("massa", "massa geral, sem foto fera");
+            }
 
             try {
                 SharedPreferences.Editor ed = prefs.edit();

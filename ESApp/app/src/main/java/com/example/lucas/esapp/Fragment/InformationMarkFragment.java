@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -34,15 +33,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cz.msebera.android.httpclient.Header;
-
-import static com.example.lucas.esapp.R.color.greenbutton;
 
 /**
  * Created by Lucas on 26/07/20
@@ -52,6 +45,7 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
     private static LatLng myPosition;
     private static GoogleMap map;
     private static MarkedPlace mark;
+    private ProgressDialog progress;
 
     private List<Polyline> polylines;
     private static final int[] COLORS = new int[]{R.color.accent,R.color.primary,R.color.primary_light,R.color.accent,R.color.primary_dark_material_light};
@@ -101,7 +95,7 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
         polylines = new ArrayList<>();
 
         textViewName.setText(mark.getName());
-        ratingBar.setRating(3.2f);
+        ratingBar.setRating(Float.parseFloat(String.valueOf(mark.getEvaluation())));
 
         button.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.M)
@@ -117,6 +111,7 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
         buttonDrawRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loading();
                 displayRoute();
             }
         });
@@ -125,7 +120,7 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
             @Override
             public void onClick(View v) {
                 try {
-                    finalize();
+                    this.finalize();
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 }
@@ -148,6 +143,19 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
         routing.execute();
     }
 
+
+    private void loading() {
+        progress = new ProgressDialog(getActivity());
+
+        progress.setMessage(getString(R.string.loading));
+
+        progress.setIndeterminate(false);
+
+        progress.setCancelable(false);
+
+        progress.show();
+    }
+
     @Override
     public void onRoutingFailure(RouteException e) {
         if(e != null) {
@@ -155,6 +163,8 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
         }else {
             Toast.makeText(getActivity(), "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
         }
+
+        progress.dismiss();
     }
 
     @Override
@@ -190,6 +200,7 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
             Log.d("Map", "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue());
             getActivity().getFragmentManager().beginTransaction().remove(this).commit();
         }
+        progress.dismiss();
     }
 
     @Override

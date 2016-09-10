@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.lucas.esapp.Fragment.InformationMarkFragment;
@@ -41,10 +42,12 @@ public class InformationsMarkedActivity extends AppCompatActivity {
         TextView name = (TextView) findViewById(R.id.textMarketName);
         TextView categoria = (TextView) findViewById(R.id.textCategoria);
         TextView descricao = (TextView) findViewById(R.id.textDescricao);
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
         name.setText(markedplace.getName());
         categoria.setText(markedplace.getCategory());
         descricao.setText(markedplace.getDescricao());
+        ratingBar.setRating(Float.parseFloat(String.valueOf(markedplace.getEvaluation())));
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override

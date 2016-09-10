@@ -219,6 +219,7 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
 
                     @Override
                     public void onMapLongClick(LatLng latLng) {
+                        loading();
                         addComplaint(latLng.latitude, latLng.longitude, true, null);
                     }
                 });
@@ -473,6 +474,7 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
 
     @Override
     public void onMapLongClick(LatLng latLng) {
+        loading();
         addComplaint(latLng.latitude, latLng.longitude, true, null);
     }
 
@@ -532,21 +534,7 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
                 moveBottomBarDown();
                 mBottomBarIsUp = false;
             }
-
-
-       // } else {
-    //
-      //      moveBottomBarDown();
-        //    mBottomBarIsUp = false;
-          //  final AlertDialog.Builder addComplaintDialog = new AlertDialog.Builder(getActivity());
-
-            //addComplaintDialog.setMessage(getActivity().getResources().getString(R.string.mark_outside_pb));
-
-            //AlertDialog mensagem = addComplaintDialog.create();
-           // getContext();
-
-           // mensagem.show();
-    //    }
+        progress.dismiss();
     }
 
     private void goToComplaintScreen(String location, double latitude, double longitude) {
@@ -592,12 +580,16 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
 
     private void addComplaintInUserLocation(boolean isFromMap) {
         myLocation = getMyLocation();
+        try{
         if(UFCG.contains(myLocation))
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 18f));
         else
             Toast.makeText(getActivity(), R.string.out_of_ufcg, Toast.LENGTH_SHORT).show();
         if (myLocation == null)
             openMapPermissionDialog();
+        } catch (Exception ex){
+            Toast.makeText(getActivity(), "Your gps is off, please turn on and try again", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void openMapPermissionDialog() {
