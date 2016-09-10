@@ -16,8 +16,9 @@ public class MarkedPlace implements Parcelable {
     private double distance;
     private double evaluation = 0.0;
     private String category;
+    private String status;
 
-    public MarkedPlace(int id, String type, String name, String info1, String info2, double lat, double log, double distance, double evaluation){
+    public MarkedPlace(int id, String type, String name, String info1, String info2, double lat, double log, double distance, double evaluation, String status){
         this.id = id;
         this.name = name;
         this.category = type;
@@ -27,6 +28,7 @@ public class MarkedPlace implements Parcelable {
         this.log = log;
         this.distance = distance;
         this.evaluation = evaluation;
+        this.status = status;
     }
 
     public MarkedPlace(double latitude, double longitude){
@@ -126,5 +128,13 @@ public class MarkedPlace implements Parcelable {
 
     public void setEvaluation(double evaluation) {
         this.evaluation = evaluation;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

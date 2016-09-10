@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -51,6 +52,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
@@ -64,6 +69,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cz.msebera.android.httpclient.Header;
+
 /**
  * Created by Lucas on 04/08/2016.
  */
@@ -73,6 +80,7 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
     private static String SERVER_URI = "";
 
     private MarkerOptions markerOptions = null;
+    private AsyncHttpClient client;
 
 
     private MapView mMapView;
@@ -105,6 +113,7 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
             .target(new LatLng(-7.21517971, -35.90912998)).zoom(16.0f).bearing(0).tilt(0).build();
     private float mMinZoom;
     private float mMaxZoom;
+    private boolean adm = false;
 
     private ProgressBar mProgressBar;
 
@@ -139,6 +148,9 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
             mAddPlaceFAB.setVisibility(View.GONE);
 
             mBottomCardView.setVisibility(View.GONE);
+
+            SERVER_URI = getString(R.string.server_uri);
+            client = new AsyncHttpClient();
 
             try {
                 MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -239,12 +251,18 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
                                     clickedMarker.remove();
                             }
 
-                            seeInformationsMarketPlace(marker);
-                            // Intent i = new Intent(getActivity(), DenunciaVisualization.class);
-                            // i.putExtra("markerInfo", markersInfo.get(marker));
-                            // i.putExtra("userId", userId);
-                            // startActivityForResult(i, VISUALIZATION_CODE);
-                            // openDenunciaVisualizationDialog(markersInfo.get(marker));
+                            MarkedPlace select = null;
+                            for(MarkedPlace m : markedPlaces){
+                                if(m.getLat() == marker.getPosition().latitude && m.getLog() == marker.getPosition().longitude){
+                                    select = m;
+                                    break;
+                                }
+                            }
+
+                            if(select != null && select.getStatus().equals("active"))
+                                seeInformationsMarketPlace(marker);
+                            else if (select.getStatus().equals("pending") && adm)
+                                seeInformationsMarketPlaceToAdd(marker);
                         }
                         return true;
                     }
@@ -335,6 +353,7 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String JSONMarkers = sharedPref.getString("markers", null);
+        adm = sharedPref.getBoolean("adm", false);
 
         if(JSONMarkers != null){
             try {
@@ -351,7 +370,8 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
                     String photo = marked.getString("photo");
                     String category = marked.getString("category");
                     String descricao = marked.getString("descricao");
-                    markers.add(new MarkedPlace(id,category,name,descricao,photo,lat,log,distance,evaluation));
+                    String status = marked.getString("status");
+                    markers.add(new MarkedPlace(id,category,name,descricao,photo,lat,log,distance,evaluation,status));
                 }
         } catch (JSONException e) {
                 e.printStackTrace();
@@ -372,24 +392,54 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
             }
             marker.setDistance(distance);
 
-            switch (marker.getCategory()) {
-                case "Lanchonete":
-                    markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
-                    break;
-                case "Xerox":
-                    markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
-                    break;
-                case "Coordenação":
-                    markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
-                    break;
-                default:
-                    markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
-            }
+            markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
+
             mMap.addMarker(markerOptions);
         }
         markedPlaces = markers;
 
+        if(adm){
+            carregarLugaresToAdd();
+        }
+
         progress.dismiss();
+    }
+
+    private void carregarLugaresToAdd() {
+        String getMarkersUrl = SERVER_URI + "/markersToAdd";
+        client.setConnectTimeout(6000);
+        client.get(getMarkersUrl, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject timeline) {
+                try {
+                    JSONArray responsePost = timeline.getJSONArray("toAdd");
+                    for (int i = 0; i < responsePost.length(); i++) {
+                        JSONObject marked = responsePost.getJSONObject(i);
+                        Integer id = marked.getInt("id");
+                        Double evaluation = marked.getDouble("evaluation");
+                        Double distance = marked.getDouble("distance");
+                        Double log = marked.getDouble("log");
+                        Double lat = marked.getDouble("lat");
+                        String name = marked.getString("name");
+                        String photo = marked.getString("photo");
+                        String category = marked.getString("category");
+                        String descricao = marked.getString("descricao");
+                        String status = marked.getString("status");
+                        markedPlaces.add(new MarkedPlace(id,category,name,descricao,photo,lat,log,distance,evaluation,status));
+                        markerOptions = new MarkerOptions().position(new LatLng(lat, log)).title(name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        mMap.addMarker(markerOptions);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+                super.onFailure(statusCode, headers, throwable, response);
+                Toast.makeText(getActivity(), getString(R.string.error_make_request), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -702,6 +752,20 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
         getActivity();
         if (resultCode == Activity.RESULT_OK) {
         }
+    }
+
+    public void seeInformationsMarketPlaceToAdd(Marker marker) {
+        FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        myLocation = getMyLocation();
+        MarkedPlace select = null;
+        for(MarkedPlace m : markedPlaces){
+            if(m.getLat() == marker.getPosition().latitude && m.getLog() == marker.getPosition().longitude){
+                select = m;
+                break;
+            }
+        }
+        ft.add(InformationMarkToAddFragment.newInstance(select), null);
+        ft.commit();
     }
 
     public void seeInformationsMarketPlace(Marker marker) {
