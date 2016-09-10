@@ -1,8 +1,10 @@
 package com.example.lucas.esapp.Activity;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,11 @@ import android.widget.Toast;
 
 import com.example.lucas.esapp.Model.MarkedPlace;
 import com.example.lucas.esapp.R;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import cz.msebera.android.httpclient.Header;
 
 public class EditMarkedPlaceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private MarkedPlace markedplace;
@@ -21,6 +28,10 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
     private EditText editTextName;
     private EditText editTextInfo2;
     private Spinner spinnerCategory;
+    private String category;
+    private AsyncHttpClient client;
+    private String SERVER_URI;
+    private ProgressDialog progress;
 
     private boolean adicionar = false;
     @Override
@@ -34,8 +45,11 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle("Edit Informations");
+        SERVER_URI = getString(R.string.server_uri);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_18dp);
         editTextInfo2 = (EditText) findViewById(R.id.editTextInfo2);
+
+        client = new AsyncHttpClient();
 
         markedplace = getIntent().getExtras().getParcelable("markedplace");
 
@@ -71,10 +85,10 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
                 finish();
                 return true;
             case R.id.action_register:
-                // TODO editar informações
                 if(adicionar){
-                    Toast.makeText(EditMarkedPlaceActivity.this, "Add =)", Toast.LENGTH_SHORT).show();
+                    addLocal();
                 } else {
+                    // TODO editar informações
                     Toast.makeText(EditMarkedPlaceActivity.this, "Edit", Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -82,9 +96,60 @@ public class EditMarkedPlaceActivity extends AppCompatActivity implements Adapte
         return super.onOptionsItemSelected(item);
     }
 
+    private void addLocal() {
+        loading();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("name", editTextName.getText());
+        requestParams.put("category", category);
+        requestParams.put("description", editTextInfo2.getText());
+        requestParams.put("photo", "no photo");
+        requestParams.put("latitude", markedplace.getLat());
+        requestParams.put("longitude", markedplace.getLog());
+        requestParams.setUseJsonStreamer(true);
+        client.post(SERVER_URI + "/addPlace", requestParams, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+               Toast.makeText(getApplication(), "Error to send place", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Toast.makeText(EditMarkedPlaceActivity.this, "Enviado com sucesso", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+
+            }
+        });
+    }
+
+    private void loading() {
+        progress = new ProgressDialog(this);
+
+        progress.setMessage(getString(R.string.loading));
+
+        progress.setIndeterminate(false);
+
+        progress.setCancelable(false);
+
+        progress.show();
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(EditMarkedPlaceActivity.this, position + "", Toast.LENGTH_SHORT).show();
+        switch (position) {
+            case 0:
+                category = "Lanchonete";
+                break;
+            case 1:
+                category = "Bloco";
+                break;
+            case 2:
+                category = "Xerox";
+                break;
+            case 3:
+                category = "Coordenação";
+                break;
+        }
     }
 
     @Override
