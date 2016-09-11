@@ -14,4 +14,7 @@
 
     <dimen name="radio_button_conner_radius">5dp</dimen>
     <dimen name="radio_button_stroke_border">1dp</dimen>
+
+    <color name="year">#999999</color>
+    <color name="title">#222222</color>
 </resources>

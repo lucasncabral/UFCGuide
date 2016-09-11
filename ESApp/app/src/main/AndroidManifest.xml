@@ -17,9 +17,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -37,13 +37,16 @@
             android:theme="@style/MaterialDrawerTheme.Light" />
         <activity android:name=".Activity.SettingsActivity" />
         <activity android:name=".Activity.InformationsMarkedActivity" />
-        <activity android:name=".Activity.Splash"
+        <activity
+            android:name=".Activity.Splash"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.CommentsActivity"></activity>
     </application>
 
 </manifest>

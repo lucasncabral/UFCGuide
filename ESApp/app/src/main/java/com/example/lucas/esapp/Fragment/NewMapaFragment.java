@@ -310,7 +310,9 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
         menu.clear();
         menuInflater.inflate(R.menu.menu_mapa, menu);
         MenuItem item = menu.findItem(R.id.action_search);
+        MenuItem tutorial = menu.findItem(R.id.tutorial);
         searchView.setMenuItem(item);
+
     }
 
     @Override
