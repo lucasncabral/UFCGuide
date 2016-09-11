@@ -85,7 +85,7 @@ public class ListResultSearchFragment extends DialogFragment implements RecycleV
 
         if(resultSearch.size() == 0){
             textSearch.setText(getString(R.string.no_result));
-            recyclerView.setBackground(getResources().getDrawable(R.drawable.serverout));
+            recyclerView.setBackground(getResources().getDrawable(R.drawable.serverout1));
         } else {
             textSearch.setText(searchAdapter.getItemCount() + " results for this search");
             recyclerView.setBackground(null);
