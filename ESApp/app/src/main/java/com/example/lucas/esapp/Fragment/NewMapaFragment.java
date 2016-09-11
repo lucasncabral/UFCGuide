@@ -263,6 +263,8 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
                                 seeInformationsMarketPlace(marker);
                             else if (select.getStatus().equals("pending") && adm)
                                 seeInformationsMarketPlaceToAdd(marker);
+                            else if (select.getStatus().equals("edit") && adm)
+                                seeInformationsMarketPlace(marker);
                         }
                         return true;
                     }
@@ -354,7 +356,17 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String JSONMarkers = sharedPref.getString("markers", null);
         adm = sharedPref.getBoolean("adm", false);
+        ArrayList<Integer> idPlacesToEdit = null;
+        if(adm) {
+            getEditsPlaces(JSONMarkers, markers);
+        } else {
+            carregaMarkers(JSONMarkers, idPlacesToEdit, markers);
+        }
 
+        progress.dismiss();
+    }
+
+    private void carregaMarkers(String JSONMarkers, ArrayList<Integer> idPlacesToEdit, List<MarkedPlace> markers){
         if(JSONMarkers != null){
             try {
                 JSONObject response = new JSONObject(JSONMarkers);
@@ -371,9 +383,12 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
                     String category = marked.getString("category");
                     String descricao = marked.getString("descricao");
                     String status = marked.getString("status");
+                    if(adm && idPlacesToEdit!= null & idPlacesToEdit.contains(id)){
+                        status = "edit";
+                    }
                     markers.add(new MarkedPlace(id,category,name,descricao,photo,lat,log,distance,evaluation,status));
                 }
-        } catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -391,8 +406,10 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
                 distance = -0.001;
             }
             marker.setDistance(distance);
-
-            markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
+            if(marker.getStatus().equals("edit")){
+                markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+            } else
+                markerOptions = new MarkerOptions().position(new LatLng(marker.getLat(), marker.getLog())).title(marker.getName());
 
             mMap.addMarker(markerOptions);
         }
@@ -401,8 +418,6 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
         if(adm){
             carregarLugaresToAdd();
         }
-
-        progress.dismiss();
     }
 
     private void carregarLugaresToAdd() {
@@ -865,5 +880,36 @@ public class NewMapaFragment extends Fragment implements android.location.Locati
             mMap.clear();
             fetchMarkers();
         }
+    }
+
+    public ArrayList<Integer> getEditsPlaces(final String JSONMarkers, final List<MarkedPlace> markers) {
+        final ArrayList<Integer> editPlaces = new ArrayList<>();
+        String getMarkersUrl = SERVER_URI + "/editsPlace";
+        client.setConnectTimeout(6000);
+        client.get(getMarkersUrl, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject timeline) {
+                try {
+                    JSONArray result = timeline.getJSONArray("result");
+                    Log.d("resultArray", result.toString());
+                    for (int i = 0; i < result.length(); i++) {
+                        Integer id = result.getInt(i);
+                        editPlaces.add(id);
+                    }
+                    carregaMarkers(JSONMarkers, editPlaces, markers);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+                super.onFailure(statusCode, headers, throwable, response);
+                Toast.makeText(getActivity(), getString(R.string.error_make_request), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return editPlaces;
     }
 }
