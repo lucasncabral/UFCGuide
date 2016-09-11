@@ -101,7 +101,7 @@ public class InformationMarkFragment extends DialogFragment implements RoutingLi
             @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                MarkedPlace markedplace = new MarkedPlace(mark.getId(), mark.getCategory(), mark.getName(),mark.getDescricao(), mark.getPhoto(),markerSelect.latitude, markerSelect.longitude,0,mark.getEvaluation() );
+                MarkedPlace markedplace = new MarkedPlace(mark.getId(), mark.getCategory(), mark.getName(),mark.getDescricao(), mark.getPhoto(),markerSelect.latitude, markerSelect.longitude,0,mark.getEvaluation(),mark.getStatus() );
                 Intent registerIntent = new Intent(getActivity(), InformationsMarkedActivity.class);
                 registerIntent.putExtra("markedplace", markedplace);
                 startActivity(registerIntent);
